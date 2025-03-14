@@ -42,7 +42,7 @@ class DataHandling:
                 primes.append(int(num))
                 sleep(0.001)
         primes = ', '.join([str(el) for el in primes])
-        self.file.write(primes)
+        file.write(primes)
 
     def factorial_list(self, file):
         factorials = []
@@ -51,4 +51,4 @@ class DataHandling:
             factorials.append(Calculations(int(num)).get_factorial())
             sleep(0.001)
         factorials = ', '.join([str(el) for el in factorials])
-        self.file.write(factorials)
+        file.write(factorials)
