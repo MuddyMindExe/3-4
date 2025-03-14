@@ -6,20 +6,6 @@ class File:
     def __init__(self, path):
         self.path = path
 
-    def write(self, info):
-        with open(self.path, 'w') as file:
-            file.write(info)
-
-    def read(self):
-        with open(self.path, 'r') as file:
-            return file.readlines()
-
-
-class DataHandling:
-    def __init__(self):
-        self.path = DataHandling.set_path()
-        self.file = File(self.path)
-
     @staticmethod
     def set_path():
         while True:
@@ -30,13 +16,27 @@ class DataHandling:
             except (OSError, FileNotFoundError) as e:
                 print(f"Error: {e}. Try again.")
 
+    def write(self, info):
+        with open(self.path, 'w') as file:
+            file.write(info)
+
+    def read(self):
+        with open(self.path, 'r') as file:
+            return file.readlines()
+
+
+class DataHandling:
+    def __init__(self, starter_file: File):
+        self.path = starter_file.path
+        self.starter_file = starter_file
+
     def generate_list(self):
         almost_random_digits = [4, 2, 5, 6, 1, 3, 9, 9]
-        self.file.write(', '.join([str(el) for el in almost_random_digits]))
+        self.starter_file.write(', '.join([str(el) for el in almost_random_digits]))
 
     def prime_list(self, file):
         primes = []
-        nums = self.file.read()[0].split(', ')
+        nums = self.starter_file.read()[0].split(', ')
         for num in nums:
             if Calculations(int(num)).is_prime():
                 primes.append(int(num))
@@ -46,7 +46,7 @@ class DataHandling:
 
     def factorial_list(self, file):
         factorials = []
-        nums = self.file.read()[0].split(', ')
+        nums = self.starter_file.read()[0].split(', ')
         for num in nums:
             factorials.append(Calculations(int(num)).get_factorial())
             sleep(0.001)
